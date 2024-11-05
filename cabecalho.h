@@ -2,5 +2,6 @@
 #define CABECALHO_H
 
 void matriz_notas ();
+void telaInicial ();
 
 #endif

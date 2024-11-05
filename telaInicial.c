@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <conio.h> 
+#include "cabecalho.h"
 
 void exibirTelaInicial() 
 {

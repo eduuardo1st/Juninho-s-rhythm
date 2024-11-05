@@ -7,8 +7,7 @@
 #define NUM_COLUNAS 4
 
 int main(){
-    void matriz_notas ();
-
+    
 
 
     return 0;

@@ -44,5 +44,5 @@ void telaInicial()
         }
         printf("\n");  
     }
-    return 0;
+   
 }

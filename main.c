@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "cabecalho.h"
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 
@@ -22,26 +23,10 @@ typedef struct {
     RECT hitbox;
 } BarraTecla;
 
-typedef struct {
-    int tempo;   // Tempo em ms para a nota surgir
-    int tecla;   // Qual tecla a nota representa
-    int jaCriada; // Flag para indicar se a nota já foi gerada
-} EventoNota;
-
 Nota notas[10];
 int numNotas = 0;
 int pontuacao = 0;
 BarraTecla barrasTeclas[4];
-
-// Exemplo de eventos predefinidos para as notas
-EventoNota eventos[] = {
-    {3000, 1, 0},
-    {1000, 2, 0},
-    {1500, 3, 0},
-    {2000, 4, 0},
-    {2500, 1, 0}
-};
-int numeroEventos = sizeof(eventos) / sizeof(eventos[0]);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void GerarNota(int tecla);

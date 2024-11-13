@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -9,7 +10,7 @@
 #define WINDOW_TITLE "Jogo de Ritmo em C"
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 800
-#define HITBOX_TOLERANCIA 15
+#define HITBOX_TOLERANCIA 20
 
 typedef struct {
     int x, y;
@@ -34,7 +35,7 @@ void MoverNotas(int tempoAtual);
 void DesenharNotas(HDC hdc);
 void DesenharBarrasTeclas(HDC hdc);
 void DesenharPontuacao(HDC hdc);
-COLORREF GerarCorAleatoria();
+COLORREF GerarCorPorColuna(int coluna);
 void VerificarAcerto(WPARAM wParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -58,12 +59,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
-    SetTimer(hwnd, 1, 30, NULL); // A cada 30ms
+    SetTimer(hwnd, 1, 1, NULL); // A cada 30ms
 
     ShowWindow(hwnd, nCmdShow);
 
     //musica
-    PlaySound("Lucky.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    PlaySound("giorno_epic.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
     MSG msg = {0};
     int tempoAtual = 0;  // Variável para o tempo do jogo em ms
@@ -126,10 +127,12 @@ void GerarNota(int tecla) {
         notas[numNotas].x = x;
         notas[numNotas].y = 0;
         notas[numNotas].tecla = tecla;
-        notas[numNotas].cor = GerarCorAleatoria();
+        notas[numNotas].cor = GerarCorPorColuna(tecla - 1);
         numNotas++;
     }
 }
+
+int erros = 0; // Adicione uma variável global para erros
 
 void MoverNotas(int tempoAtual) {
     // Gera notas de acordo com o tempo predefinido
@@ -141,8 +144,10 @@ void MoverNotas(int tempoAtual) {
     }
 
     for (int i = 0; i < numNotas; i++) {
-        notas[i].y += 5;
+        notas[i].y += 5; // Move a nota para baixo
         if (notas[i].y > WINDOW_HEIGHT) {
+            // Contabiliza um erro se a nota passou da tela
+            erros++;
             for (int j = i; j < numNotas - 1; j++) {
                 notas[j] = notas[j + 1];
             }
@@ -186,36 +191,67 @@ void DesenharBarrasTeclas(HDC hdc) {
 }
 
 void DesenharPontuacao(HDC hdc) {
-    char pontuacaoTexto[10];
-    sprintf(pontuacaoTexto, "Pontos: %d", pontuacao);
+    char pontuacaoTexto[50];
+    sprintf(pontuacaoTexto, "Pontos: %d | Erros: %d", pontuacao, erros);
     SetTextColor(hdc, RGB(255, 255, 255));
     SetBkMode(hdc, TRANSPARENT);
-    TextOut(hdc, WINDOW_WIDTH - 150, 50, pontuacaoTexto, strlen(pontuacaoTexto));
+    TextOut(hdc, WINDOW_WIDTH - 250, 50, pontuacaoTexto, strlen(pontuacaoTexto));
 }
 
-COLORREF GerarCorAleatoria() {
-    return RGB(rand() % 256, rand() % 256, rand() % 256);
+COLORREF GerarCorPorColuna(int coluna) {
+    switch (coluna) {
+        case 0: // Primeira coluna
+            return RGB(255, 255, 0); // Amarelo
+        case 1: // Segunda coluna
+            return RGB(128, 0, 128); // Roxo
+        case 2: // Terceira coluna
+            return RGB(0, 0, 0);     // Preto
+        case 3: // Quarta coluna
+            return RGB(0, 0, 255);   // Azul
+        default:
+            return RGB(255, 255, 255); // Branco (ou outra cor padrão)
+    }
 }
 
 void VerificarAcerto(WPARAM wParam) {
-    for (int i = 0; i < numNotas; i++) {
-        if ((wParam == 0x44 && notas[i].tecla == 1) || 
-            (wParam == 0x46 && notas[i].tecla == 2) ||
-            (wParam == 0x4A && notas[i].tecla == 3) ||
-            (wParam == 0x4B && notas[i].tecla == 4)) {
+     // Variáveis para rastrear quais teclas foram pressionadas
+    bool tecla1 = false, tecla2 = false, tecla3 = false, tecla4 = false;
+    int i,j;
+
+    // Verifica qual tecla foi pressionada
+    if (wParam == 0x44) tecla1 = true; // tecla 1
+    if (wParam == 0x46) tecla2 = true; // tecla 2
+    if (wParam == 0x4A) tecla3 = true; // tecla 3
+    if (wParam == 0x4B) tecla4 = true; // tecla 4
+
+    // Verifica se as quatro teclas foram pressionadas
+    for (i = 0; i < numNotas; i++) {
+        bool acerto = false;
+
+        // Verifica se a nota corresponde a uma tecla pressionada
+        if ((notas[i].tecla == 1 && tecla1) ||
+            (notas[i].tecla == 2 && tecla2) ||
+            (notas[i].tecla == 3 && tecla3) ||
+            (notas[i].tecla == 4 && tecla4)) {
 
             RECT hitbox = barrasTeclas[notas[i].tecla - 1].hitbox;
-            
+
+            // Verifica se a nota está dentro da hitbox
             if (notas[i].y >= hitbox.top - HITBOX_TOLERANCIA &&
                 notas[i].y <= hitbox.bottom + HITBOX_TOLERANCIA) {
                 
                 pontuacao++;
-                for (int j = i; j < numNotas - 1; j++) {
-                    notas[j] = notas[j + 1];
-                }
-                numNotas--;
-                i--;
+                acerto = true;
             }
+        }
+
+        // Se houve acerto, remove a nota
+        if (acerto) {
+            for (j = i; j < numNotas - 1; j++) {
+                notas[j] = notas[j + 1];
+            }
+            numNotas--;
+            i--;
         }
     }
 }

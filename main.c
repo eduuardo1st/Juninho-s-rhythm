@@ -12,11 +12,18 @@
 #define WINDOW_HEIGHT 800
 #define HITBOX_TOLERANCIA 20
 
-typedef struct {
+typedef struct Nota Nota;
+
+struct Nota {
     int x, y;
     int tecla;
     COLORREF cor;
-} Nota;
+    Nota *proxima; // Now properly defined
+};
+
+Nota *listaNotas = NULL; // Cabeça da lista encadeada de notas
+Nota *atual;
+Nota *anterior;
 
 typedef struct {
     int x, y;
@@ -73,7 +80,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         DispatchMessage(&msg);
 
         // Incrementa o tempo do jogo
-        tempoAtual += 30;
+        tempoAtual += 1;
     }
 
     return 0;
@@ -115,6 +122,36 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
+void AdicionarNota(int tecla) {
+    Nota *novaNota = (Nota *)malloc(sizeof(Nota));
+    if (novaNota == NULL) return; // Verificação de erro de alocação
+
+    int x = 0;
+    switch (tecla) {
+        case 1: x = 150; break;
+        case 2: x = 300; break;
+        case 3: x = 450; break;
+        case 4: x = 600; break;
+    }
+    novaNota->x = x;
+    novaNota->y = 0;
+    novaNota->tecla = tecla;
+    novaNota->cor = GerarCorPorColuna(tecla - 1);
+    novaNota->proxima = NULL;
+
+    // Adiciona ao final da lista
+    if (listaNotas == NULL) {
+        listaNotas = novaNota;
+    } else {
+        Nota *temp = listaNotas;
+        while (temp->proxima != NULL) {
+            temp = temp->proxima;
+        }
+        temp->proxima = novaNota;
+    }
+}
+
+
 void GerarNota(int tecla) {
     if (numNotas < 10) {
         int x = 0;
@@ -135,36 +172,56 @@ void GerarNota(int tecla) {
 int erros = 0; // Adicione uma variável global para erros
 
 void MoverNotas(int tempoAtual) {
-    // Gera notas de acordo com o tempo predefinido
+    // Gerar notas de acordo com o tempo predefinido
     for (int i = 0; i < numeroEventos; i++) {
         if (eventos[i].tempo <= tempoAtual && eventos[i].jaCriada == 0) {
-            GerarNota(eventos[i].tecla);
-            eventos[i].jaCriada = 1; // Marca o evento como já gerado
+            AdicionarNota(eventos[i].tecla);
+            eventos[i].jaCriada = 1;
         }
     }
 
-    for (int i = 0; i < numNotas; i++) {
-        notas[i].y += 5; // Move a nota para baixo
-        if (notas[i].y > WINDOW_HEIGHT) {
+    // Mover e remover notas
+    Nota *atual = listaNotas;
+    Nota *anterior = NULL;
+
+    while (atual != NULL) {
+        atual->y += 5; // Move a nota para baixo
+
+        if (atual->y > WINDOW_HEIGHT) {
             // Contabiliza um erro se a nota passou da tela
             erros++;
-            for (int j = i; j < numNotas - 1; j++) {
-                notas[j] = notas[j + 1];
+
+            // Remover a nota da lista
+            if (anterior == NULL) {
+                listaNotas = atual->proxima;
+            } else {
+                anterior->proxima = atual->proxima;
             }
-            numNotas--;
-            i--;
+
+            // Libera a memória da nota removida
+            Nota *remover = atual;
+            atual = atual->proxima;
+            free(remover);
+        } else {
+            anterior = atual;
+            atual = atual->proxima;
         }
     }
 }
 
+
 void DesenharNotas(HDC hdc) {
-    for (int i = 0; i < numNotas; i++) {
-        HBRUSH brush = CreateSolidBrush(notas[i].cor);
+    Nota *atual = listaNotas;
+    while (atual != NULL) {
+        HBRUSH brush = CreateSolidBrush(atual->cor);
         SelectObject(hdc, brush);
-        Ellipse(hdc, notas[i].x - 20, notas[i].y - 20, notas[i].x + 20, notas[i].y + 20);
+        Ellipse(hdc, atual->x - 20, atual->y - 20, atual->x + 20, atual->y + 20);
         DeleteObject(brush);
+
+        atual = atual->proxima;
     }
 }
+
 
 void DesenharBarrasTeclas(HDC hdc) {
     int barraHeight = 40;
@@ -214,44 +271,47 @@ COLORREF GerarCorPorColuna(int coluna) {
 }
 
 void VerificarAcerto(WPARAM wParam) {
-     // Variáveis para rastrear quais teclas foram pressionadas
     bool tecla1 = false, tecla2 = false, tecla3 = false, tecla4 = false;
-    int i,j;
 
-    // Verifica qual tecla foi pressionada
     if (wParam == 0x44) tecla1 = true; // tecla 1
     if (wParam == 0x46) tecla2 = true; // tecla 2
     if (wParam == 0x4A) tecla3 = true; // tecla 3
     if (wParam == 0x4B) tecla4 = true; // tecla 4
 
-    // Verifica se as quatro teclas foram pressionadas
-    for (i = 0; i < numNotas; i++) {
+    Nota *atual = listaNotas;
+    Nota *anterior = NULL;
+
+    while (atual != NULL) {
         bool acerto = false;
 
-        // Verifica se a nota corresponde a uma tecla pressionada
-        if ((notas[i].tecla == 1 && tecla1) ||
-            (notas[i].tecla == 2 && tecla2) ||
-            (notas[i].tecla == 3 && tecla3) ||
-            (notas[i].tecla == 4 && tecla4)) {
+        if ((atual->tecla == 1 && tecla1) ||
+            (atual->tecla == 2 && tecla2) ||
+            (atual->tecla == 3 && tecla3) ||
+            (atual->tecla == 4 && tecla4)) {
 
-            RECT hitbox = barrasTeclas[notas[i].tecla - 1].hitbox;
+            RECT hitbox = barrasTeclas[atual->tecla - 1].hitbox;
 
-            // Verifica se a nota está dentro da hitbox
-            if (notas[i].y >= hitbox.top - HITBOX_TOLERANCIA &&
-                notas[i].y <= hitbox.bottom + HITBOX_TOLERANCIA) {
-                
+            if (atual->y >= hitbox.top - HITBOX_TOLERANCIA &&
+                atual->y <= hitbox.bottom + HITBOX_TOLERANCIA) {
+
                 pontuacao++;
                 acerto = true;
             }
         }
 
-        // Se houve acerto, remove a nota
         if (acerto) {
-            for (j = i; j < numNotas - 1; j++) {
-                notas[j] = notas[j + 1];
+            if (anterior == NULL) {
+                listaNotas = atual->proxima;
+            } else {
+                anterior->proxima = atual->proxima;
             }
-            numNotas--;
-            i--;
+
+            Nota *remover = atual;
+            atual = atual->proxima;
+            free(remover);
+        } else {
+            anterior = atual;
+            atual = atual->proxima;
         }
     }
 }

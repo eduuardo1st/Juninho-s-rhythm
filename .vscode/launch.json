@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/dudug/OneDrive/Documentos/Repositório1/Juninho-s-rhythm",
-      "program": "c:/Users/dudug/OneDrive/Documentos/Repositório1/Juninho-s-rhythm/build/Debug/outDebug",
+      "cwd": "c:/Users/dudug/OneDrive/Área de Trabalho/Giorno fase",
+      "program": "c:/Users/dudug/OneDrive/Área de Trabalho/Giorno fase/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

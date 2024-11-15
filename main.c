@@ -66,7 +66,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
-    SetTimer(hwnd, 1, 1, NULL); // A cada 30ms
+    SetTimer(hwnd, 1, 1, NULL); // A cada 1ms
 
     ShowWindow(hwnd, nCmdShow);
 
@@ -150,7 +150,6 @@ void AdicionarNota(int tecla) {
         temp->proxima = novaNota;
     }
 }
-
 
 void GerarNota(int tecla) {
     if (numNotas < 10) {

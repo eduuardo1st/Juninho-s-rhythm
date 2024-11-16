@@ -71,7 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     ShowWindow(hwnd, nCmdShow);
 
     //musica
-    PlaySound("giorno_epic.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    PlaySound("giorno_fase.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
     MSG msg = {0};
     int tempoAtual = 0;  // Variável para o tempo do jogo em ms
@@ -170,6 +170,8 @@ void GerarNota(int tecla) {
 
 int erros = 0; // Adicione uma variável global para erros
 
+bool jogoEncerrado = false; // Variável de controle para o estado do jogo
+
 void MoverNotas(int tempoAtual) {
     // Gerar notas de acordo com o tempo predefinido
     for (int i = 0; i < numeroEventos; i++) {
@@ -205,6 +207,15 @@ void MoverNotas(int tempoAtual) {
             anterior = atual;
             atual = atual->proxima;
         }
+    }
+
+    // Verifica se a soma de erros e pontuação é 539
+    if (!jogoEncerrado && pontuacao + erros == 539) {
+        jogoEncerrado = true; // Marca o jogo como encerrado
+        char mensagem[100];
+        sprintf(mensagem, "Fim da fase!\nPontuação final: %d\nErros: %d", pontuacao, erros);
+        MessageBox(NULL, mensagem, "Fim da Fase", MB_OK | MB_ICONINFORMATION);
+        PostQuitMessage(0); // Encerra o jogo
     }
 }
 

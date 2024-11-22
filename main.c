@@ -1,6 +1,6 @@
 #include <windows.h>
-#include "cabecalho.h"
-#include "menu.h"
+#include "resourses/cabecalho.h"
+#include "resourses/menu.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {

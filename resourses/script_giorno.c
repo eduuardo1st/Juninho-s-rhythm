@@ -13,7 +13,7 @@ EventoNota eventos[] = {
     {18500,1,0}, {19500,2,0}, {20500,3,0}, {21500,4,0}, 
     {22500,4,0}, {23500,3,0},{24500,2,0}, {25500,1,0},
 
-    // Repetição com incremento no primeiro parâmetro
+    // Repetiï¿½ï¿½o com incremento no primeiro parï¿½metro
 {26000,2,0}, {26000,3,0},
 {28500,1,0}, {28500,4,0},
 {31400,1,0}, {32400,2,0}, {33400,3,0}, {34400,4,0}, 
@@ -97,8 +97,8 @@ EventoNota eventos[] = {
 {92200,4,0},
 {92600,4,0},
 
-//repetição ajustada
-{93000,1,0}, // Começa 400 ms após o último valor anterior
+//repetiï¿½ï¿½o ajustada
+{93000,1,0}, // Comeï¿½a 400 ms apï¿½s o ï¿½ltimo valor anterior
 {93400,1,0},
 {93800,1,0},
 {94200,2,0},
@@ -115,8 +115,8 @@ EventoNota eventos[] = {
 {98600,4,0},
 {99000,4,0},
 
-//repetição ajustada
-{99400,1,0}, // Começa 400 ms após o último valor anterior
+//repetiï¿½ï¿½o ajustada
+{99400,1,0}, // Comeï¿½a 400 ms apï¿½s o ï¿½ltimo valor anterior
 {99800,1,0},
 {100200,1,0},
 {100600,2,0},
@@ -133,8 +133,8 @@ EventoNota eventos[] = {
 {105000,4,0},
 {105400,4,0},
 
-//repetição ajustada
-{105800,1,0}, // Começa 400 ms após o último valor anterior
+//repetiï¿½ï¿½o ajustada
+{105800,1,0}, // Comeï¿½a 400 ms apï¿½s o ï¿½ltimo valor anterior
 {106200,1,0},
 {106600,1,0},
 {107000,2,0},
@@ -176,7 +176,7 @@ EventoNota eventos[] = {
 {119200,1,0},
 {119600,1,0},
 
-//repetição ajustada
+//repetiï¿½ï¿½o ajustada
 {120000,4,0}, 
 {120400,4,0},
 {120800,4,0},
@@ -194,7 +194,7 @@ EventoNota eventos[] = {
 {125600,1,0},
 {126000,1,0},
 
-//repetição ajustada
+//repetiï¿½ï¿½o ajustada
 {126400,4,0}, 
 {126800,4,0},
 {127200,4,0},
@@ -212,7 +212,7 @@ EventoNota eventos[] = {
 {132000,1,0},
 {132400,1,0},
 
-//repetição ajustada
+//repetiï¿½ï¿½o ajustada
 {132800,4,0}, 
 {133200,4,0},
 {133600,4,0},
@@ -341,7 +341,7 @@ EventoNota eventos[] = {
 {208400,2,0},
 {209200,1,0},{209200,4,0},
 
-// repetição
+// repetiï¿½ï¿½o
 {210000,2,0},
 {210800,3,0},
 {211600,2,0},
@@ -426,8 +426,8 @@ EventoNota eventos[] = {
 {255900,4,0},
 {256300,4,0},
 
-// repetição ajustada
-{256700,1,0}, // Começa 400 ms após o último valor anterior
+// repetiï¿½ï¿½o ajustada
+{256700,1,0}, // Comeï¿½a 400 ms apï¿½s o ï¿½ltimo valor anterior
 {257100,1,0},
 {257500,1,0},
 {257900,2,0},
@@ -444,8 +444,8 @@ EventoNota eventos[] = {
 {262300,4,0},
 {262700,4,0},
 
-// repetição ajustada
-{263100,1,0}, // Começa 400 ms após o último valor anterior
+// repetiï¿½ï¿½o ajustada
+{263100,1,0}, // Comeï¿½a 400 ms apï¿½s o ï¿½ltimo valor anterior
 {263500,1,0},
 {263900,1,0},
 {264300,2,0},
@@ -462,8 +462,8 @@ EventoNota eventos[] = {
 {268700,4,0},
 {269100,4,0},
 
-// repetição ajustada
-{269500,1,0}, // Começa 400 ms após o último valor anterior
+// repetiï¿½ï¿½o ajustada
+{269500,1,0}, // Comeï¿½a 400 ms apï¿½s o ï¿½ltimo valor anterior
 {269900,1,0},
 {270300,1,0},
 {270700,2,0},
@@ -481,5 +481,5 @@ EventoNota eventos[] = {
 {275500,4,0},
 //fim
 };
-// Número de eventos definidos
+// Nï¿½mero de eventos definidos
 int numeroEventos = sizeof(eventos) / sizeof(eventos[0]);

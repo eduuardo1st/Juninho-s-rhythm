@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <stdio.h>
-#include "menu.h"
-#include "cores.h"  // Incluir o arquivo de cores
+#include "resourses/menu.h"
+#include "resourses/cores.h"  // Incluir o arquivo de cores
 
 HWND hwndMenuPrincipal;
 HWND botaoEmHover = NULL;

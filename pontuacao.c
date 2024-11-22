@@ -1,8 +1,8 @@
 #include <windows.h>
 #include <stdio.h>
-#include "pontuacao.h"
-#include "util.h"
-#include "cores.h"
+#include "resourses/pontuacao.h"
+#include "resourses/util.h"
+#include "resourses/cores.h"
 
 #define TAMANHO_BUFFER 100
 
@@ -32,7 +32,7 @@ void abrirPontuacao() {
 
     // Leitura da pontuação do arquivo
     char pontuacaoTexto[TAMANHO_BUFFER];
-    if (!lerArquivo("pontuacao.txt", pontuacaoTexto, TAMANHO_BUFFER)) {
+    if (!lerArquivo("resourses/pontuacao.txt", pontuacaoTexto, TAMANHO_BUFFER)) {
         snprintf(pontuacaoTexto, TAMANHO_BUFFER, "Pontuação: 0");
     }
 

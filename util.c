@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "util.h"
+#include "resourses/util.h"
 
 // Função para ler o conteúdo de um arquivo e armazená-lo em um buffer
 int lerArquivo(const char *caminho, char *buffer, int tamanho) {

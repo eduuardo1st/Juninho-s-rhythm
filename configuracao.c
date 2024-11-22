@@ -1,8 +1,8 @@
 #include <windows.h>
 #include <stdio.h>
-#include "configuracao.h"
-#include "util.h"
-#include "cores.h"
+#include "resourses/configuracao.h"
+#include "resourses/util.h"
+#include "resourses/cores.h"
 
 LRESULT CALLBACK ConfiguracaoProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 HWND hwndConfiguracao, editTecla1, editTecla2, editTecla3, editTecla4;
@@ -50,7 +50,7 @@ LRESULT CALLBACK ConfiguracaoProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
             CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 150, 200, 80, 30, hwnd, (HMENU)ID_VOLTAR_CONFIG, ((LPCREATESTRUCT)lParam)->hInstance, NULL);
 
             // Carrega as configurações salvas ao abrir a janela
-            if (lerArquivo("teclas.txt", buffer, TAMANHO_BUFFER)) {
+            if (lerArquivo("resourses/teclas.txt", buffer, TAMANHO_BUFFER)) {
                 char tecla1, tecla2, tecla3, tecla4;
                 sscanf(buffer, "%c %c %c %c", &tecla1, &tecla2, &tecla3, &tecla4);
 
@@ -115,7 +115,7 @@ LRESULT CALLBACK ConfiguracaoProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
                     char tecla4 = buffer[0];
 
                     snprintf(buffer, sizeof(buffer), "%c %c %c %c", tecla1, tecla2, tecla3, tecla4);
-                    if (salvarArquivo("teclas.txt", buffer)) {
+                    if (salvarArquivo("resourses/teclas.txt", buffer)) {
                         MessageBox(NULL, "Configurações salvas com sucesso!", "Sucesso", MB_OK);
                     } else {
                         MessageBox(NULL, "Erro ao salvar configurações.", "Erro", MB_OK);

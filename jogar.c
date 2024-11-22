@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <process.h>
-#include "jogar.h"
-#include "cores.h"
+#include "resourses/jogar.h"
+#include "resourses/cores.h"
 
 HWND hwndJogar = NULL;
 HBRUSH hbrBackgroundJogar;
@@ -82,7 +82,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         switch (LOWORD(wParam))
         {
          case ID_FASE1:
-            system("fase1.exe");
+            system("fase_giorno.exe");
         break;
 
         case ID_FASE2:

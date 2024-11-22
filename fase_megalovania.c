@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "cabecalho.h"
+#include "resourses/cabecalho.h"
 #include <mmsystem.h>
 
 

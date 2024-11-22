@@ -52,7 +52,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         HRGN hRgn = CreateRoundRectRgn(
             pDraw->rcItem.left, pDraw->rcItem.top,
             pDraw->rcItem.right, pDraw->rcItem.bottom,
-            20, 20);
+            6, 6);
         SelectClipRgn(pDraw->hDC, hRgn);
         HBRUSH hBrush = CreateSolidBrush(COR_BOTOES_FUNDO);
         FillRect(pDraw->hDC, &pDraw->rcItem, hBrush);

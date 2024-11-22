@@ -143,7 +143,7 @@ LRESULT CALLBACK MenuProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             HRGN hRgn = CreateRoundRectRgn(
                 pDraw->rcItem.left, pDraw->rcItem.top,
                 pDraw->rcItem.right, pDraw->rcItem.bottom,
-                7, 7 // Raio horizontal e vertical das bordas arredondadas
+                6, 6 // Raio horizontal e vertical das bordas arredondadas
             );
 
             // Definir a região arredondada no contexto de dispositivo

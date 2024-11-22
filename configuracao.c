@@ -76,7 +76,7 @@ LRESULT CALLBACK ConfiguracaoProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
             HRGN hRgn = CreateRoundRectRgn(
                 pDraw->rcItem.left, pDraw->rcItem.top,
                 pDraw->rcItem.right, pDraw->rcItem.bottom,
-                20, 20
+                6, 6
             );
             SelectClipRgn(pDraw->hDC, hRgn);
             HBRUSH hBrush = CreateSolidBrush(COR_BOTOES_FUNDO);

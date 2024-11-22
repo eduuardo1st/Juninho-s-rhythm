@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "resourses\cores.h"
 #include "resourses\cabecalho.h"
 #include <mmsystem.h>
 
@@ -11,12 +12,29 @@
 #define WINDOW_HEIGHT 800
 #define HITBOX_TOLERANCIA 20
 
+HWND hwndLabel;
 int numNotas = 0;
 int pontuacao = 0;
 int erros;
 BarraTecla barrasTeclas[4]; // Declara��o do array de barras
 Nota *listaNotas; // Cabe�a da lista encadeada de notas
 Nota notas[10];
+
+HWND criarLabel(HWND parent, LPCSTR texto, int x, int y, int largura, int altura, HINSTANCE hInstance) {
+    HWND label = CreateWindow(
+        "STATIC", texto, WS_VISIBLE | WS_CHILD | SS_CENTER | SS_OWNERDRAW,
+        x, y, largura, altura, parent, NULL, hInstance, NULL
+    );
+
+    HFONT hFont = CreateFont(
+        24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+        DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+        DEFAULT_QUALITY, DEFAULT_QUALITY, NULL
+    );
+
+    SendMessage(label, WM_SETFONT, (WPARAM)hFont, TRUE);
+    return label; // Retorne o handle da label
+}
 
 void salvarPontuacao(int novaPontuacao) {
     const char *arquivoPontuacao = "resourses/pontuacao.txt"; // Caminho do arquivo
@@ -56,6 +74,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     WNDCLASS wc = {0};
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = GetModuleHandle(NULL);
+    wc.hbrBackground = CreateSolidBrush(COR_FUNDO_JANELA);
     wc.lpszClassName = "RythmGameWindowClass";
 
     RegisterClass(&wc);
@@ -76,6 +95,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     SetTimer(hwnd, 1, 1, NULL); // A cada 1ms
 
     ShowWindow(hwnd, SW_SHOW);
+
+     hwndLabel = criarLabel(hwnd, "Pontuação: 0 | Erros: 0", 10, 10, 300, 30, hInstance);
 
     // música
     PlaySound("assets/boateazul.wav", NULL, SND_FILENAME | SND_ASYNC | 1);
@@ -129,7 +150,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 PAINTSTRUCT ps;
                 HDC hdc = BeginPaint(hwnd, &ps);
 
-                FillRect(hdc, &ps.rcPaint, CreateSolidBrush(RGB(169, 169, 169))); 
+                FillRect(hdc, &ps.rcPaint, CreateSolidBrush(COR_FUNDO_FASE1)); 
 
                 DesenharBarrasTeclas(hdc);
                 DesenharNotas(hdc);
@@ -282,7 +303,7 @@ void DesenharBarrasTeclas(HDC hdc) {
         barrasTeclas[i].hitbox.right = x + raio;
         barrasTeclas[i].hitbox.bottom = yPosition + raio;
 
-        HBRUSH brush = CreateSolidBrush(RGB(200, 200, 200));
+        HBRUSH brush = CreateSolidBrush(COR_BOTOES_FASE1);
         SelectObject(hdc, brush);
         Ellipse(hdc, x - raio, yPosition - raio, x + raio, yPosition + raio);
         DeleteObject(brush);
@@ -292,7 +313,8 @@ void DesenharBarrasTeclas(HDC hdc) {
 void DesenharPontuacao(HDC hdc) {
     char pontuacaoTexto[50];
     sprintf(pontuacaoTexto, "Pontos: %d | Erros: %d", pontuacao, erros);
-    SetTextColor(hdc, RGB(255, 255, 255));
+    SetWindowText(hwndLabel, pontuacaoTexto);
+    SetTextColor(hdc, RGB(0, 0, 0));
     SetBkMode(hdc, TRANSPARENT);
     TextOut(hdc, WINDOW_WIDTH - 250, 50, pontuacaoTexto, strlen(pontuacaoTexto));
 }
@@ -300,15 +322,15 @@ void DesenharPontuacao(HDC hdc) {
 COLORREF GerarCorPorColuna(int coluna) {
     switch (coluna) {
         case 0: // Primeira coluna
-            return RGB(255, 255, 0); // Amarelo
+            return COR_NOTAS_1_FASE1;
         case 1: // Segunda coluna
-            return RGB(128, 0, 128); // Roxo
+            return COR_NOTAS_2_FASE1;
         case 2: // Terceira coluna
-            return RGB(0, 0, 0);     // Preto
+            return COR_NOTAS_3_FASE1;
         case 3: // Quarta coluna
-            return RGB(0, 0, 255);   // Azul
+            return COR_NOTAS_4_FASE1;
         default:
-            return RGB(255, 255, 255); // Branco (ou outra cor padr�o)
+            return COR_NOTAS_1_FASE1; // Branco (ou outra cor padr�o)
     }
 }
 

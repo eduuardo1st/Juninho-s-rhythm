@@ -86,7 +86,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
 
         case ID_FASE2:
-            MessageBox(hwnd, "Fase 2 selecionada", "Fase", MB_OK);
+            system("fase_piratas.exe");
             break;
         case ID_FASE3:
             MessageBox(hwnd, "Fase 3 selecionada", "Fase", MB_OK);
@@ -95,7 +95,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             system("fase_giorno.exe");
             break;
         case ID_FASE5:
-        
+            system("fase_megalovania.exe");
             break;
         case ID_VOLTAR_FASES:
             DestroyWindow(hwnd);

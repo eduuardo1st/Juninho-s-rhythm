@@ -93,7 +93,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 void finalizarFase1(HWND hwnd) {
     char mensagem[100];
-    sprintf(mensagem, "Fim da fase!\nPontua��o final: %d\nErros: %d", pontuacao, erros);
+    sprintf(mensagem, "Fim da fase!\nPontuacao final: %d\nErros: %d", pontuacao, erros);
     MessageBox(NULL, mensagem, "Fim da Fase", MB_OK | MB_ICONINFORMATION);
 
     // Aqui voc� pode chamar a fun��o que cria o menu principal novamente

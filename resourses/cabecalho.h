@@ -13,10 +13,12 @@ extern EventoNota eventos[];
 extern EventoNota eventos1[];
 extern EventoNota eventos2[];
 extern EventoNota eventos3[];
+extern EventoNota eventos4[];
 extern int numeroEventos;
 extern int numeroEventos1;
 extern int numeroEventos2;
 extern int numeroEventos3;
+extern int numeroEventos4;
 
 typedef struct Nota {
     int x, y;

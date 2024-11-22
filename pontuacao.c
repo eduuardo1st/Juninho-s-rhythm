@@ -24,7 +24,7 @@ void abrirPontuacao() {
     RegisterClass(&wc);
 
     hwndPontuacao = CreateWindow(
-        "JanelaPontuacao", "Pontuação Geral",
+        "JanelaPontuacao", "Pontuaçao Geral",
         WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT, 400, 250,
         NULL, NULL, wc.hInstance, NULL

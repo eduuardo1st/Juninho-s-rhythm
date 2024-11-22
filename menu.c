@@ -16,9 +16,10 @@ void mudarCores(COLORREF corFundo, COLORREF corTextoBotao, COLORREF corFundoBota
 }
 
 // Função para criar um título (label)
+// Função para criar um título (label)
 void criarLabel(HWND parent, LPCSTR texto, int x, int y, int largura, int altura, HINSTANCE hInstance) {
     HWND label = CreateWindow(
-        "STATIC", texto, WS_VISIBLE | WS_CHILD | SS_CENTER,
+        "STATIC", texto, WS_VISIBLE | WS_CHILD | SS_CENTER | SS_OWNERDRAW,
         x, y, largura, altura, parent, NULL, hInstance, NULL
     );
 
@@ -28,12 +29,34 @@ void criarLabel(HWND parent, LPCSTR texto, int x, int y, int largura, int altura
         DEFAULT_QUALITY, DEFAULT_QUALITY, NULL
     );
 
-    // Definindo a cor do fundo da label para a mesma cor da janela
-    HDC hdc = GetDC(label);
-    SetBkMode(hdc, TRANSPARENT); // Fundo transparente para o texto
-    ReleaseDC(label, hdc);
-
     SendMessage(label, WM_SETFONT, (WPARAM)hFont, TRUE);
+}
+
+// Procedimento de janela para a label
+LRESULT CALLBACK LabelProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+    switch (msg) {
+        case WM_DRAWITEM: {
+            LPDRAWITEMSTRUCT pDraw = (LPDRAWITEMSTRUCT)lParam;
+
+            // Preencher o fundo da label com a cor de fundo da janela
+            HBRUSH hBrush = CreateSolidBrush(COR_FUNDO_JANELA);
+            FillRect(pDraw->hDC, &pDraw->rcItem, hBrush);
+            DeleteObject(hBrush);
+
+            // Obter o texto da label
+            char textoLabel[256];
+            GetWindowText(pDraw->hwndItem, textoLabel, sizeof(textoLabel));
+
+            // Definir a cor do texto e desenhá-lo
+            SetBkMode(pDraw->hDC, TRANSPARENT); // Fundo transparente para o texto
+            SetTextColor(pDraw->hDC, COR_BOTOES_TEXTO); // Defina a cor do texto como desejado
+            DrawText(pDraw->hDC, textoLabel, -1, &pDraw->rcItem, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+            return TRUE;
+        }
+        default:
+            return DefWindowProc(hwnd, msg, wParam, lParam);
+    }
 }
 
 // Função para criar botões
@@ -78,14 +101,14 @@ void criarMenuPrincipal(HINSTANCE hInstance, int nCmdShow) {
         NULL, NULL, hInstance, NULL
     );
 
-    criarLabel(hwnd, "Juninho Tiles", 0, 10, 600, 50, hInstance);
+    criarLabel(hwnd, "Juninho\n Tiles", 200, 20, 200, 50, hInstance);
 
-    int buttonWidth = 180, buttonHeight = 40, startY = 80;
+    int buttonWidth = 180, buttonHeight = 40, startY = 110;
     int posX = (600 - buttonWidth) / 2;
 
     criarBotao(hwnd, "Jogar", ID_JOGAR, posX, startY, buttonWidth, buttonHeight, hInstance);
-    criarBotao(hwnd, "Configuração", ID_CONFIGURACAO, posX, startY + 60, buttonWidth, buttonHeight, hInstance);
-    criarBotao(hwnd, "Pontuação", ID_PONTUACAO, posX, startY + 120, buttonWidth, buttonHeight, hInstance);
+    criarBotao(hwnd, "Configuracao", ID_CONFIGURACAO, posX, startY + 60, buttonWidth, buttonHeight, hInstance);
+    criarBotao(hwnd, "Pontuacao", ID_PONTUACAO, posX, startY + 120, buttonWidth, buttonHeight, hInstance);
     criarBotao(hwnd, "Sair", ID_SAIR, posX, startY + 180, buttonWidth, buttonHeight, hInstance);
 
     ShowWindow(hwnd, nCmdShow);
@@ -105,6 +128,13 @@ LRESULT CALLBACK MenuProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             FillRect(hdc, &rect, hbrBackground); // Preenche o fundo com a cor definida
             return 1; // Indica que tratamos a mensagem
         }
+        case WM_MOUSEMOVE: {
+        if (botaoEmHover != (HWND)lParam) {
+        botaoEmHover = (HWND)lParam;
+        InvalidateRect(botaoEmHover, NULL, TRUE);
+        }
+       break;
+        }
 
         case WM_DRAWITEM: {
             LPDRAWITEMSTRUCT pDraw = (LPDRAWITEMSTRUCT)lParam;
@@ -113,7 +143,7 @@ LRESULT CALLBACK MenuProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             HRGN hRgn = CreateRoundRectRgn(
                 pDraw->rcItem.left, pDraw->rcItem.top,
                 pDraw->rcItem.right, pDraw->rcItem.bottom,
-                20, 20 // Raio horizontal e vertical das bordas arredondadas
+                7, 7 // Raio horizontal e vertical das bordas arredondadas
             );
 
             // Definir a região arredondada no contexto de dispositivo

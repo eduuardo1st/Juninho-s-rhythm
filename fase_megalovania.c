@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "resourses\cores.h"
 #include "resourses\cabecalho.h"
 #include <mmsystem.h>
 
@@ -129,7 +130,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 PAINTSTRUCT ps;
                 HDC hdc = BeginPaint(hwnd, &ps);
 
-                FillRect(hdc, &ps.rcPaint, CreateSolidBrush(RGB(169, 169, 169))); 
+                FillRect(hdc, &ps.rcPaint, CreateSolidBrush(COR_FUNDO_FASE5)); 
 
                 DesenharBarrasTeclas(hdc);
                 DesenharNotas(hdc);
@@ -300,15 +301,15 @@ void DesenharPontuacao(HDC hdc) {
 COLORREF GerarCorPorColuna(int coluna) {
     switch (coluna) {
         case 0: // Primeira coluna
-            return RGB(255, 255, 0); // Amarelo
+            return  COR_NOTAS_1_FASE5;// Amarelo
         case 1: // Segunda coluna
-            return RGB(128, 0, 128); // Roxo
+            return COR_NOTAS_2_FASE5;// Roxo
         case 2: // Terceira coluna
-            return RGB(0, 0, 0);     // Preto
+            return COR_NOTAS_3_FASE5;// Preto
         case 3: // Quarta coluna
-            return RGB(0, 0, 255);   // Azul
+            return COR_NOTAS_4_FASE5;// Azul
         default:
-            return RGB(255, 255, 255); // Branco (ou outra cor padr�o)
+            return COR_NOTAS_1_FASE5;// Branco (ou outra cor padr�o)
     }
 }
 

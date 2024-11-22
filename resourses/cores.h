@@ -16,9 +16,9 @@
 
 #define COR_FUNDO_FASE1       RGB(0, 18, 51)
 #define COR_FUNDO_FASE2       RGB(2, 62, 138)
-#define COR_FUNDO_FASE3       RGB(94, 84, 142)
-#define COR_FUNDO_FASE4       RGB(94, 84, 142)
-#define COR_FUNDO_FASE5       RGB(94, 84, 142)
+#define COR_FUNDO_FASE3       RGB(0, 114, 0)
+#define COR_FUNDO_FASE4       RGB(36, 0, 70)
+#define COR_FUNDO_FASE5       RGB(5, 5, 15)
 
 #define COR_BOTOES_FASE1   RGB(92, 103, 125)
 
@@ -36,10 +36,25 @@
 
 #define COR_BOTOES_FASE3   RGB(92, 103, 125)
 
-#define COR_NOTAS_1_FASE3   RGB(237, 224, 212)
-#define COR_NOTAS_2_FASE3   RGB(47, 14, 7)
-#define COR_NOTAS_3_FASE3   RGB(133, 24, 42)  
-#define COR_NOTAS_4_FASE3   RGB(237, 224, 212)
+#define COR_NOTAS_1_FASE3   RGB(253, 197, 0)
+#define COR_NOTAS_2_FASE3   RGB(248, 249, 250)
+#define COR_NOTAS_3_FASE3   RGB(3, 4, 94)  
+#define COR_NOTAS_4_FASE3   RGB(253, 197, 0)
+
+#define COR_BOTOES_FASE4   RGB(92, 103, 125)
+
+#define COR_NOTAS_1_FASE4   RGB(255, 255, 0)
+#define COR_NOTAS_2_FASE4   RGB(128, 0, 128)
+#define COR_NOTAS_3_FASE4   RGB(199, 125, 255)  
+#define COR_NOTAS_4_FASE4   RGB(0, 0, 255)
+
+#define COR_BOTOES_FASE5   RGB(92, 103, 125)
+
+#define COR_NOTAS_1_FASE5   RGB(0, 166, 251)
+#define COR_NOTAS_2_FASE5   RGB(0, 100, 148)
+#define COR_NOTAS_3_FASE5   RGB(237, 242, 251)  
+#define COR_NOTAS_4_FASE5   RGB(5, 130, 202)
+
 
 
 

@@ -15,8 +15,8 @@
 int numNotas1 = 0;
 int pontuacao1 = 0;
 int erros1;
-BarraTecla barrasTeclas1[4]; // Declaração do array de barras
-Nota *listaNotas1; // Cabeça da lista encadeada de notas
+BarraTecla barrasTeclas1[4]; // Declaraï¿½ï¿½o do array de barras
+Nota *listaNotas1; // Cabeï¿½a da lista encadeada de notas
 Nota notas1[10];
 
 LRESULT CALLBACK WindowProc1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -54,7 +54,7 @@ void Fase5() {
     ShowWindow(hwnd, SW_SHOW);
 
     // mÃºsica
-    PlaySound("megalovania_novo.wav", NULL, SND_FILENAME | SND_ASYNC | 1);
+    PlaySound("assets/megalovania_novo.wav", NULL, SND_FILENAME | SND_ASYNC | 1);
 
     MSG msg = {0};
     int tempoAtual = 0;  // VariÃ¡vel para o tempo do jogo em ms

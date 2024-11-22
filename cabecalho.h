@@ -42,4 +42,6 @@ void VerificarAcerto1(WPARAM wParam);
 
 extern int tecla[4]; // Declare como um array de inteiros
 
+void salvarPontuacao(int novaPontuacao);
+
 #endif

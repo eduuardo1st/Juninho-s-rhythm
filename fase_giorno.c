@@ -18,6 +18,30 @@ BarraTecla barrasTeclas[4]; // Declaração do array de barras
 Nota *listaNotas; // Cabeça da lista encadeada de notas
 Nota notas[10];
 
+void salvarPontuacao(int novaPontuacao) {
+    const char *arquivoPontuacao = "pontuacao.txt"; // Caminho do arquivo
+    int pontuacaoAnterior = 0;
+
+    // Tenta abrir o arquivo para leitura
+    FILE *arquivo = fopen(arquivoPontuacao, "r");
+    if (arquivo != NULL) {
+        fscanf(arquivo, "%d", &pontuacaoAnterior); // Lê a pontuação anterior
+        fclose(arquivo);
+    }
+
+    // Soma a nova pontuação à pontuação anterior
+    int pontuacaoFinal = pontuacaoAnterior + novaPontuacao;
+
+    // Salva a pontuação final no arquivo
+    arquivo = fopen(arquivoPontuacao, "w");
+    if (arquivo != NULL) {
+        fprintf(arquivo, "%d", pontuacaoFinal);
+        fclose(arquivo);
+    } else {
+        printf("Erro ao salvar a pontuação.\n"); // Tratamento de erro
+    }
+}
+
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void GerarNota(int tecla);
 void MoverNotas(int tempoAtual);
@@ -27,7 +51,8 @@ void DesenharPontuacao(HDC hdc);
 COLORREF GerarCorPorColuna(int coluna);
 void VerificarAcerto(WPARAM wParam);
 
-void Fase1() {
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
     WNDCLASS wc = {0};
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = GetModuleHandle(NULL);
@@ -66,6 +91,31 @@ void Fase1() {
     }
 }
 
+void finalizarFase1(HWND hwnd) {
+    char mensagem[100];
+    sprintf(mensagem, "Fim da fase!\nPontuação final: %d\nErros: %d", pontuacao, erros);
+    MessageBox(NULL, mensagem, "Fim da Fase", MB_OK | MB_ICONINFORMATION);
+
+    // Aqui você pode chamar a função que cria o menu principal novamente
+    salvarPontuacao(pontuacao);
+    // Fecha a janela da Fase 1
+    DestroyWindow(hwnd);
+    InvalidateRect(hwnd, NULL, TRUE);
+
+
+}
+void ReiniciarFase() {
+    pontuacao = 0; // Reinicia a pontuação
+    erros = 0; // Reinicia os erros
+    listaNotas = NULL; // Limpa a lista de notas
+    numNotas = 0; // Reseta o número de notas
+
+    // Reinicia os eventos
+    for (int i = 0; i < numeroEventos; i++) {
+ eventos[i].jaCriada = 0; // Reseta o estado de criação dos eventos
+    }
+}
+
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static int tempoAtual = 0;
 
@@ -98,6 +148,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             MoverNotas(tempoAtual); 
             InvalidateRect(hwnd, NULL, TRUE); 
             break;
+
+        // Adicione um caso para finalizar a fase
+        case WM_CLOSE:
+            finalizarFase1(hwnd); // Chama a função de finalização ao fechar
+            return 0;
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
@@ -190,12 +245,9 @@ void MoverNotas(int tempoAtual) {
     }
 
     // Verifica se a soma de erros e pontuaï¿½ï¿½o ï¿½ 539
-    if (!jogoEncerrado1 && pontuacao + erros == 539) {
+    if (!jogoEncerrado1 && pontuacao + erros == numeroEventos) {
         jogoEncerrado1 = true; // Marca o jogo como encerrado
-        char mensagem[100];
-        sprintf(mensagem, "Fim da fase!\nPontuaco final: %d\nErros: %d", pontuacao, erros);
-        MessageBox(NULL, mensagem, "Fim da Fase", MB_OK | MB_ICONINFORMATION);
-        PostQuitMessage(0); // Encerra o jogo
+        finalizarFase1(GetActiveWindow());
     }
 }
 

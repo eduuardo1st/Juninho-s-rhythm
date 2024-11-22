@@ -89,7 +89,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             system("fase_piratas.exe");
             break;
         case ID_FASE3:
-            MessageBox(hwnd, "Fase 3 selecionada", "Fase", MB_OK);
+            system("fase_aquipensando.exe");
             break;
         case ID_FASE4:
             system("fase_giorno.exe");

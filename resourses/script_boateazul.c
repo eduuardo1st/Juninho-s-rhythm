@@ -194,4 +194,4 @@ EventoNota eventos2[] = {
 
 
 // N�mero de eventos definidos
-int numeroEventos = sizeof(eventos2) / sizeof(eventos2[0]);
+int numeroEventos2 = sizeof(eventos2) / sizeof(eventos2[0]);

@@ -82,7 +82,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         switch (LOWORD(wParam))
         {
          case ID_FASE1:
-            system("fase_giorno.exe");
+            system("fase_boateazul.exe");
         break;
 
         case ID_FASE2:
@@ -92,7 +92,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             MessageBox(hwnd, "Fase 3 selecionada", "Fase", MB_OK);
             break;
         case ID_FASE4:
-            MessageBox(hwnd, "Fase 4 selecionada", "Fase", MB_OK);
+            system("fase_giorno.exe");
             break;
         case ID_FASE5:
         

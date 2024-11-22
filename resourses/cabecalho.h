@@ -11,9 +11,10 @@ typedef struct {
 
 extern EventoNota eventos[];
 extern EventoNota eventos1[];
+extern EventoNota eventos2[];
 extern int numeroEventos;
 extern int numeroEventos1;
-
+extern int numeroEventos2;
 
 typedef struct Nota {
     int x, y;

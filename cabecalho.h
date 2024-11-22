@@ -1,5 +1,7 @@
 #ifndef CABECALHO_H
 #define CABECALHO_H
+#include <stdbool.h>
+#include <windows.h>
 
 typedef struct {
     long tempo;    // Tempo em ms para a nota surgir
@@ -8,6 +10,36 @@ typedef struct {
 } EventoNota;
 
 extern EventoNota eventos[];
+extern EventoNota eventos1[];
 extern int numeroEventos;
+extern int numeroEventos1;
+
+
+typedef struct Nota {
+    int x, y;
+    int tecla;
+    COLORREF cor;
+    struct Nota *proxima; // Usar struct Nota aqui
+} Nota;
+
+typedef struct {
+    int x, y;
+    int raio;
+    RECT hitbox;
+} BarraTecla;
+
+void DesenharNotas(HDC hdc);
+void DesenharBarrasTeclas(HDC hdc);
+void DesenharPontuacao(HDC hdc);
+COLORREF GerarCorPorColuna(int coluna);
+void VerificarAcerto(WPARAM wParam);
+
+void DesenharNotas1(HDC hdc);
+void DesenharBarrasTeclas1(HDC hdc);
+void DesenharPontuacao1(HDC hdc);
+COLORREF GerarCorPorColuna1(int coluna);
+void VerificarAcerto1(WPARAM wParam);
+
+extern int tecla[4]; // Declare como um array de inteiros
 
 #endif

@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <windows.h>
 
-
 // Função para exibir uma MessageBox genérica
 void exibirMensagem(const char *mensagem);
 

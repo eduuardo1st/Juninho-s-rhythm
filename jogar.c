@@ -80,9 +80,9 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         switch (LOWORD(wParam))
         {
-       case ID_FASE1:
-        ShowWindow(hwndJogar, SW_HIDE); // Esconde a janela de seleção de fases
-        Fase1(); // Chama a função que inicia a fase 1
+         case ID_FASE1:
+            ShowWindow(hwndJogar, SW_HIDE); // Esconde a janela de seleção de fases
+            Fase1(); // Chama a função que inicia a fase 1
         break;
 
         case ID_FASE2:
@@ -95,7 +95,8 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             MessageBox(hwnd, "Fase 4 selecionada", "Fase", MB_OK);
             break;
         case ID_FASE5:
-            MessageBox(hwnd, "Fase 5 selecionada", "Fase", MB_OK);
+            ShowWindow(hwndJogar, SW_HIDE); // Esconde a janela de seleção de fases
+            Fase5(); // Chama a função que inicia a fase 1
             break;
         case ID_VOLTAR_FASES:
             DestroyWindow(hwnd);

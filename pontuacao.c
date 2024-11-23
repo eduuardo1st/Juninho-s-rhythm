@@ -24,27 +24,40 @@ void abrirPontuacao() {
     RegisterClass(&wc);
 
     hwndPontuacao = CreateWindow(
-        "JanelaPontuacao", "Pontuaçao Geral",
+        "JanelaPontuacao", "Pontuações Gerais",
         WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
-        CW_USEDEFAULT, CW_USEDEFAULT, 400, 250,
+        CW_USEDEFAULT, CW_USEDEFAULT, 500, 400,
         NULL, NULL, wc.hInstance, NULL
     );
 
-    // Leitura da pontuação do arquivo
-    char pontuacaoTexto[TAMANHO_BUFFER];
-    if (!lerArquivo("resourses/pontuacao.txt", pontuacaoTexto, TAMANHO_BUFFER)) {
-        snprintf(pontuacaoTexto, TAMANHO_BUFFER, "Pontuação: 0");
+    // Leitura das pontuações de vários arquivos
+    char pontuacoes[5][TAMANHO_BUFFER];
+    const char *arquivos[5] = {
+        "resourses/pontuacao1.txt",
+        "resourses/pontuacao2.txt",
+        "resourses/pontuacao3.txt",
+        "resourses/pontuacao4.txt",
+        "resourses/pontuacao5.txt"
+    };
+
+    for (int i = 0; i < 5; i++) {
+        if (!lerArquivo(arquivos[i], pontuacoes[i], TAMANHO_BUFFER)) {
+            snprintf(pontuacoes[i], TAMANHO_BUFFER, "Pontuação %d: 0", i + 1);
+        }
     }
 
-    // Criação de elementos da interface
-    CreateWindow("STATIC", pontuacaoTexto, WS_VISIBLE | WS_CHILD | SS_CENTER, 
-                 50, 50, 300, 40, hwndPontuacao, NULL, wc.hInstance, NULL);
+    // Criação de elementos da interface para exibir cada pontuação
+    for (int i = 0; i < 5; i++) {
+        CreateWindow("STATIC", pontuacoes[i], WS_VISIBLE | WS_CHILD | SS_CENTER,
+                     50, 50 + (i * 50), 400, 40, hwndPontuacao, NULL, wc.hInstance, NULL);
+    }
 
-    CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
-                 150, 150, 100, 40, hwndPontuacao, (HMENU)ID_VOLTAR_PONTUACAO, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW,
+                 200, 300, 100, 40, hwndPontuacao, (HMENU)ID_VOLTAR_PONTUACAO, wc.hInstance, NULL);
 
     ShowWindow(hwndPontuacao, SW_SHOW);
 }
+
 
 // Função de procedimento de janela para a janela de pontuação
 LRESULT CALLBACK PontuacaoProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {

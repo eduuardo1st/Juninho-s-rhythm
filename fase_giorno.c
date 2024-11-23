@@ -20,23 +20,29 @@ Nota *listaNotas; // Cabe�a da lista encadeada de notas
 Nota notas[10];
 
 void salvarPontuacao(int novaPontuacao) {
-    const char *arquivoPontuacao = "resourses/pontuacao.txt"; // Caminho do arquivo
+    const char *arquivoPontuacao = "resourses/pontuacao4.txt"; // Caminho do arquivo
     int pontuacaoAnterior = 0;
 
     // Tenta abrir o arquivo para leitura
     FILE *arquivo = fopen(arquivoPontuacao, "r");
     if (arquivo != NULL) {
-        fscanf(arquivo, "%d", &pontuacaoAnterior); // L� a pontua��o anterior
+        fscanf(arquivo, "Fase 4:     %d\n", &pontuacaoAnterior); // L� a pontua��o anterior
         fclose(arquivo);
     }
 
     // Soma a nova pontua��o � pontua��o anterior
-    int pontuacaoFinal = pontuacaoAnterior + novaPontuacao;
+     int pontuacaoFinal;
+    if(pontuacao > pontuacaoAnterior){
+        pontuacaoFinal = novaPontuacao;
+    }
+    else{
+        pontuacaoFinal = pontuacaoAnterior;
+    }
 
     // Salva a pontua��o final no arquivo
     arquivo = fopen(arquivoPontuacao, "w");
     if (arquivo != NULL) {
-        fprintf(arquivo, "%d", pontuacaoFinal);
+        fprintf(arquivo, "Giorno Theme:    %d\n", pontuacaoFinal);
         fclose(arquivo);
     } else {
         printf("Erro ao salvar a pontua��o.\n"); // Tratamento de erro

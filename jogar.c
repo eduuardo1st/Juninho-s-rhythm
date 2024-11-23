@@ -25,16 +25,17 @@ void abrirJogar()
     hwndJogar = CreateWindow(
         "JanelaJogar", "Seleção de Fases",
         WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
-        CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
+        CW_USEDEFAULT, CW_USEDEFAULT, 700, 500,
         NULL, NULL, wc.hInstance, NULL);
 
     // Criação dos botões de fases com BS_OWNERDRAW para estilização
-    CreateWindow("BUTTON", "Fase 1", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 50, 50, 100, 40, hwndJogar, (HMENU)ID_FASE1, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 2", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 200, 50, 100, 40, hwndJogar, (HMENU)ID_FASE2, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 3", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 50, 120, 100, 40, hwndJogar, (HMENU)ID_FASE3, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 4", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 200, 120, 100, 40, hwndJogar, (HMENU)ID_FASE4, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 5", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 50, 190, 100, 40, hwndJogar, (HMENU)ID_FASE5, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 200, 190, 100, 40, hwndJogar, (HMENU)ID_VOLTAR_FASES, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 1", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 100, 50, 100, 40, hwndJogar, (HMENU)ID_FASE1, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 2", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 400, 50, 100, 40, hwndJogar, (HMENU)ID_FASE2, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 3", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 100, 120, 100, 40, hwndJogar, (HMENU)ID_FASE3, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 4", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 400, 120, 100, 40, hwndJogar, (HMENU)ID_FASE4, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 5", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 100, 190, 100, 40, hwndJogar, (HMENU)ID_FASE5, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "?????", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 400, 190, 100, 40, hwndJogar, (HMENU)ID_BOSS, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 250, 240, 100, 40, hwndJogar, (HMENU)ID_VOLTAR_FASES, wc.hInstance, NULL);
 
     ShowWindow(hwndJogar, SW_SHOW);
 }
@@ -97,6 +98,9 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case ID_FASE5:
             system("fase_megalovania.exe");
             break;
+        case ID_BOSS:
+            MessageBox(NULL, "Botão foda funcionando", "Sucesso", MB_OK);
+        break;
         case ID_VOLTAR_FASES:
             DestroyWindow(hwnd);
             break;

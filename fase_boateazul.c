@@ -37,23 +37,29 @@ HWND criarLabel(HWND parent, LPCSTR texto, int x, int y, int largura, int altura
 }
 
 void salvarPontuacao(int novaPontuacao) {
-    const char *arquivoPontuacao = "resourses/pontuacao.txt"; // Caminho do arquivo
+    const char *arquivoPontuacao = "resourses/pontuacao1.txt"; // Caminho do arquivo
     int pontuacaoAnterior = 0;
 
     // Tenta abrir o arquivo para leitura
     FILE *arquivo = fopen(arquivoPontuacao, "r");
     if (arquivo != NULL) {
-        fscanf(arquivo, "%d", &pontuacaoAnterior); // L� a pontua��o anterior
+        fscanf(arquivo,"Boate Azul:    %d", &pontuacaoAnterior); // L� a pontua��o anterior
         fclose(arquivo);
     }
 
     // Soma a nova pontua��o � pontua��o anterior
-    int pontuacaoFinal = pontuacaoAnterior + novaPontuacao;
-
+    
+    int pontuacaoFinal;
+    if(pontuacao > pontuacaoAnterior){
+        pontuacaoFinal = novaPontuacao;
+    }
+    else{
+        pontuacaoFinal = pontuacaoAnterior;
+    }
     // Salva a pontua��o final no arquivo
     arquivo = fopen(arquivoPontuacao, "w");
     if (arquivo != NULL) {
-        fprintf(arquivo, "%d", pontuacaoFinal);
+        fprintf(arquivo, "Boate Azul:    %d", pontuacaoFinal);
         fclose(arquivo);
     } else {
         printf("Erro ao salvar a pontua��o.\n"); // Tratamento de erro

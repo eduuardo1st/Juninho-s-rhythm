@@ -6,7 +6,7 @@
 typedef struct {
     long tempo;    // Tempo em ms para a nota surgir
     int tecla;    // Qual tecla a nota representa
-    int jaCriada; // Flag para indicar se a nota já foi gerada
+    int jaCriada; // Flag para indicar se a nota jï¿½ foi gerada
 } EventoNota;
 
 extern EventoNota eventos[];
@@ -32,7 +32,6 @@ typedef struct {
     int raio;
     RECT hitbox;
 } BarraTecla;
-
 void DesenharNotas(HDC hdc);
 void DesenharBarrasTeclas(HDC hdc);
 void DesenharPontuacao(HDC hdc);

@@ -9,7 +9,8 @@
 #define ID_FASE3 103
 #define ID_FASE4 104
 #define ID_FASE5 105
-#define ID_VOLTAR_FASES 106
+#define ID_BOSS 106
+#define ID_VOLTAR_FASES 107
 // Função para abrir a janela de seleção de fase
 void abrirJogar();
 

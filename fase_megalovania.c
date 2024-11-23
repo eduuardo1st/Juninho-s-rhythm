@@ -6,6 +6,8 @@
 #include "resourses\cores.h"
 #include "resourses\cabecalho.h"
 #include <mmsystem.h>
+#include "resourses\util.h"
+#include "resourses\configuracao.h"
 
 #define WINDOW_TITLE "Jogo de Ritmo em C"
 #define WINDOW_WIDTH 1000
@@ -76,7 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     );
 
     if (hwnd == NULL) {
-        return;
+        return 1;
     }
 
     SetTimer(hwnd, 1, 1, NULL); // A cada 1ms
@@ -209,7 +211,7 @@ void GerarNota(int tecla) {
     }
 }
 
-erros = 0; // Adicione uma vari�vel global para erros
+int erros = 0; // Adicione uma vari�vel global para erros
 
 bool jogoEncerrado1 = false; // Vari�vel de controle para o estado do jogo
 
@@ -318,26 +320,43 @@ COLORREF GerarCorPorColuna(int coluna) {
     }
 }
 
-void VerificarAcerto(WPARAM wParam) {
+void VerificarAcerto(WPARAM wParam)
+{
+
+    unsigned char tecla1, tecla2, tecla3, tecla4;
+
+    FILE *arquivo = fopen("resourses/teclas.txt", "r");
+    fgets(buffer, 128, arquivo);
+    fclose(arquivo);
+    sscanf(buffer, "%c %c %c %c", &tecla1, &tecla2, &tecla3, &tecla4);
+
+    int teclaPressionada = 0;
     int tecla = 0;
-    if (wParam == 0x44) tecla = 1;  // 'D'
-    if (wParam == 0x46) tecla = 2;  // 'F'
-    if (wParam == 0x4A) tecla = 3;  // 'J'
-    if (wParam == 0x4B) tecla = 4;  // 'K'
+   
+    if(wParam == tecla1) teclaPressionada = 1;
+    if(wParam == tecla2) teclaPressionada = 2;
+    if(wParam == tecla3) teclaPressionada = 3;
+    if(wParam == tecla4) teclaPressionada = 4;
 
     Nota *atual = listaNotas;
     Nota *anterior = NULL;
 
-    while (atual != NULL) {
-        if (atual->tecla == tecla) {
-            RECT hitbox = barrasTeclas[tecla - 1].hitbox;
+    while (atual != NULL)
+    {
+        if (atual->tecla == teclaPressionada)
+        {
+            RECT hitbox = barrasTeclas[teclaPressionada - 1].hitbox;
             if (atual->y >= hitbox.top - HITBOX_TOLERANCIA &&
-                atual->y <= hitbox.bottom + HITBOX_TOLERANCIA) {
+                atual->y <= hitbox.bottom + HITBOX_TOLERANCIA)
+            {
                 pontuacao++;
 
-                if (anterior == NULL) {
+                if (anterior == NULL)
+                {
                     listaNotas = atual->proxima;
-                } else {
+                }
+                else
+                {
                     anterior->proxima = atual->proxima;
                 }
 

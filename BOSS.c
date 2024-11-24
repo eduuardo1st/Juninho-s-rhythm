@@ -16,15 +16,15 @@
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 800
 #define HITBOX_TOLERANCIA 30
-#define HITBOX_INVISIVEL_Y (WINDOW_HEIGHT - 70) // Linha abaixo dos botões
-#define VIDA_MAXIMA 50 // Vida máxima da barra
+#define HITBOX_INVISIVEL_Y (WINDOW_HEIGHT - 70) // Linha abaixo dos botï¿½es
+#define VIDA_MAXIMA 50 // Vida mï¿½xima da barra
 
 int vida_atual = VIDA_MAXIMA; // Inicia com vida cheia
 int erros_consecutivos = 0;   // Conta os erros consecutivos
 
 ULONG_PTR gdiplusToken;
 GpImage* backgroundImage = NULL; // Ponteiro para a imagem de fundo
-HBITMAP hBackgroundBitmap = NULL; // Bitmap do fundo em memória
+HBITMAP hBackgroundBitmap = NULL; // Bitmap do fundo em memï¿½ria
 
 HWND hwnd;
 int numNotas = 0;
@@ -36,12 +36,12 @@ Nota *listaNotas; // Lista encadeada para as notas geradas aleatoriamente.
 void CriarImagemDeFundo(HWND hwnd) {
     HDC hdc = GetDC(hwnd);
 
-    // Criar um contexto de memória compatível
+    // Criar um contexto de memï¿½ria compatï¿½vel
     HDC memDC = CreateCompatibleDC(hdc);
     HBITMAP hBitmap = CreateCompatibleBitmap(hdc, WINDOW_WIDTH, WINDOW_HEIGHT);
     SelectObject(memDC, hBitmap);
 
-    // Usar GDI+ para desenhar no contexto de memória
+    // Usar GDI+ para desenhar no contexto de memï¿½ria
     GpGraphics* graphics;
     GdipCreateFromHDC(memDC, &graphics);
     GdipDrawImageRectI(graphics, backgroundImage, 323, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -69,12 +69,12 @@ void DesenharImagemDeFundo(HDC hdc) {
 
 
 void DesenharBarraDeVida(HDC hdc) {
-    int largura_total = 200;  // Largura máxima da barra
+    int largura_total = 200;  // Largura mï¿½xima da barra
     int altura_barra = 20;    // Altura da barra
-    int x_posicao = WINDOW_WIDTH - 300; // Posição X da barra
-    int y_posicao = 100;                // Posição Y da barra
+    int x_posicao = WINDOW_WIDTH - 300; // Posiï¿½ï¿½o X da barra
+    int y_posicao = 100;                // Posiï¿½ï¿½o Y da barra
 
-    // Calcula a largura proporcional à vida atual
+    // Calcula a largura proporcional ï¿½ vida atual
     int largura_atual = (vida_atual * largura_total) / VIDA_MAXIMA;
 
     // Cor de fundo (vida perdida)
@@ -130,7 +130,7 @@ void salvarPontuacao(int novaPontuacao) {
         fprintf(arquivo, "O FIM:    %d\n", pontuacaoFinal);
         fclose(arquivo);
     } else {
-        printf("Erro ao salvar a pontuação.\n");
+        printf("Erro ao salvar a pontuaï¿½ï¿½o.\n");
     }
 }
 
@@ -180,7 +180,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 1;
     }
 
-    // Criar o bitmap de fundo na memória
+    // Criar o bitmap de fundo na memï¿½ria
     CriarImagemDeFundo(hwnd);
 
 
@@ -206,22 +206,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 
 
-bool jogoFinalizado = false; // Variável de controle para verificar se o jogo já foi finalizado
+bool jogoFinalizado = false; // Variï¿½vel de controle para verificar se o jogo jï¿½ foi finalizado
 
 void finalizarFase(HWND hwnd) {
-    if (jogoFinalizado) return; // Se o jogo já foi finalizado, não faz nada
+    if (jogoFinalizado) return; // Se o jogo jï¿½ foi finalizado, nï¿½o faz nada
 
     jogoFinalizado = true; // Marca que o jogo foi finalizado
 
     char mensagem[100];
     DestroyWindow(hwnd);
-    sprintf(mensagem, "Game Over!\nPontuação final: %d\nErros: %d", pontuacao, erros);
+    sprintf(mensagem, "Game Over!\nPontuaï¿½ï¿½o final: %d\nErros: %d", pontuacao, erros);
     MessageBox(NULL, mensagem, "Fim do Jogo", MB_OK | MB_ICONERROR);
     
     salvarPontuacao(pontuacao);
     
     InvalidateRect(hwnd, NULL, TRUE);
-    PostQuitMessage(0); // Encerra o executável
+    PostQuitMessage(0); // Encerra o executï¿½vel
 }
 
 
@@ -234,7 +234,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             return 0;
 
         case WM_ERASEBKGND:
-            // Retorna 1 para evitar a limpeza do fundo automática
+            // Retorna 1 para evitar a limpeza do fundo automï¿½tica
             return 1;
 
         case WM_PAINT: {
@@ -243,22 +243,22 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
             FillRect(hdc, &ps.rcPaint, CreateSolidBrush(COR_FUNDO_BOSS));
 
-            // Declarações para Double Buffering
+            // Declaraï¿½ï¿½es para Double Buffering
             HDC memDC = CreateCompatibleDC(hdc);
             HBITMAP memBitmap = CreateCompatibleBitmap(hdc, WINDOW_WIDTH, WINDOW_HEIGHT);
             HBITMAP oldBitmap = SelectObject(memDC, memBitmap);
 
-           // Desenhar fundo e elementos do jogo no contexto de memória
+           // Desenhar fundo e elementos do jogo no contexto de memï¿½ria
             DesenharImagemDeFundo(memDC);
             DesenharBarrasTeclas(memDC);
             DesenharNotas(memDC);
             DesenharPontuacao(memDC);
             DesenharBarraDeVida(memDC);
 
-             // Copiar do contexto de memória para o contexto da janela
+             // Copiar do contexto de memï¿½ria para o contexto da janela
             BitBlt(hdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, memDC, 0, 0, SRCCOPY);
 
-            // Limpar recursos do contexto de memória
+            // Limpar recursos do contexto de memï¿½ria
             SelectObject(memDC, oldBitmap);
             DeleteObject(memBitmap);
             DeleteDC(memDC);
@@ -274,7 +274,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
         case WM_TIMER:
             tempoAtual += 30;
-            GerarNotaAleatoria(tempoAtual); // Gera notas aleatórias conforme o tempo
+            GerarNotaAleatoria(tempoAtual); // Gera notas aleatï¿½rias conforme o tempo
             MoverNotas(); // Move as notas existentes
             RECT areaNotas = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
             InvalidateRect(hwnd, &areaNotas, FALSE);
@@ -333,23 +333,23 @@ void MoverNotas() {
     while (atual != NULL) {
         atual->y += 13; // Move a nota para baixo
 
-        // Verificar se a nota ultrapassou a hitbox invisível
+        // Verificar se a nota ultrapassou a hitbox invisï¿½vel
         if (atual->y > HITBOX_INVISIVEL_Y) { 
             // Contabilizar erro
             RegistrarErro(hwnd);
             // Remover a nota da lista encadeada
             if (anterior == NULL) {
-                listaNotas = atual->proxima; // Ajustar a cabeça da lista
+                listaNotas = atual->proxima; // Ajustar a cabeï¿½a da lista
             } else {
                 anterior->proxima = atual->proxima; // Remover nota no meio da lista
             }
 
             Nota *remover = atual;
             atual = atual->proxima;
-            free(remover); // Liberar memória da nota
+            free(remover); // Liberar memï¿½ria da nota
         } else {
             anterior = atual;
-            atual = atual->proxima; // Avançar para a próxima nota
+            atual = atual->proxima; // Avanï¿½ar para a prï¿½xima nota
         }
     }
 }
@@ -357,25 +357,25 @@ void MoverNotas() {
 void DesenharNotas(HDC hdc) {
     Nota *atual = listaNotas;
     while (atual != NULL) {
-        // Definir os vértices do triângulo equilátero invertido
+        // Definir os vï¿½rtices do triï¿½ngulo equilï¿½tero invertido
         POINT vertices[3];
-        int lado = 60;  // Lado do triângulo equilátero (maior que antes)
-        int altura = (int)((lado * sqrt(3)) / 2); // Altura do triângulo equilátero
+        int lado = 60;  // Lado do triï¿½ngulo equilï¿½tero (maior que antes)
+        int altura = (int)((lado * sqrt(3)) / 2); // Altura do triï¿½ngulo equilï¿½tero
 
-        // Calcular os vértices
-        vertices[0].x = atual->x;               // Vértice inferior (ponta para baixo)
+        // Calcular os vï¿½rtices
+        vertices[0].x = atual->x;               // Vï¿½rtice inferior (ponta para baixo)
         vertices[0].y = atual->y + altura;
 
-        vertices[1].x = atual->x - (lado / 2);  // Vértice superior esquerdo
+        vertices[1].x = atual->x - (lado / 2);  // Vï¿½rtice superior esquerdo
         vertices[1].y = atual->y;
 
-        vertices[2].x = atual->x + (lado / 2);  // Vértice superior direito
+        vertices[2].x = atual->x + (lado / 2);  // Vï¿½rtice superior direito
         vertices[2].y = atual->y;
 
-        // Desenhar o triângulo invertido
+        // Desenhar o triï¿½ngulo invertido
         HBRUSH brush = CreateSolidBrush(atual->cor);
         SelectObject(hdc, brush);
-        Polygon(hdc, vertices, 3);  // Desenha o triângulo com os vértices definidos
+        Polygon(hdc, vertices, 3);  // Desenha o triï¿½ngulo com os vï¿½rtices definidos
         DeleteObject(brush);
 
         atual = atual->proxima;
@@ -415,7 +415,7 @@ void DesenharPontuacao(HDC hdc) {
     sprintf(pontuacaoTexto, "Pontos: %d | Erros: %d", pontuacao, erros);
     SetTextColor(hdc, RGB(255, 255, 255));
     SetBkMode(hdc, TRANSPARENT);
-    TextOut(hdc, WINDOW_WIDTH - 250, 50, pontuacaoTexto, strlen(pontuacaoTexto));
+    TextOut(hdc, WINDOW_WIDTH - 250, 90, pontuacaoTexto, strlen(pontuacaoTexto));
 }
 
 COLORREF GerarCorPorColuna(int coluna) {

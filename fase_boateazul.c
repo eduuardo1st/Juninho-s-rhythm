@@ -373,9 +373,9 @@ void DesenharPontuacao(HDC hdc)
     char pontuacaoTexto[50];
     sprintf(pontuacaoTexto, "Pontos: %d | Erros: %d", pontuacao, erros);
     SetWindowText(hwndLabel, pontuacaoTexto);
-    SetTextColor(hdc, RGB(0, 0, 0));
+    SetTextColor(hdc, RGB(255, 255, 255));
     SetBkMode(hdc, TRANSPARENT);
-    TextOut(hdc, WINDOW_WIDTH - 250, 50, pontuacaoTexto, strlen(pontuacaoTexto));
+    TextOut(hdc, WINDOW_WIDTH - 250, 90, pontuacaoTexto, strlen(pontuacaoTexto));
 }
 
 COLORREF GerarCorPorColuna(int coluna)

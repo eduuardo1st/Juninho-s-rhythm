@@ -99,7 +99,7 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             system("fase_megalovania.exe");
             break;
         case ID_BOSS:
-            MessageBox(NULL, "Botão foda funcionando", "Sucesso", MB_OK);
+            system("FIM.exe");
         break;
         case ID_VOLTAR_FASES:
             DestroyWindow(hwnd);

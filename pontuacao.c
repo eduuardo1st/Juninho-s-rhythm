@@ -24,36 +24,37 @@ void abrirPontuacao() {
     RegisterClass(&wc);
 
     hwndPontuacao = CreateWindow(
-        "JanelaPontuacao", "Pontuações Gerais",
+        "JanelaPontuacao", "Pontuacoes Gerais",
         WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
-        CW_USEDEFAULT, CW_USEDEFAULT, 500, 400,
+        CW_USEDEFAULT, CW_USEDEFAULT, 600, 500,
         NULL, NULL, wc.hInstance, NULL
     );
 
     // Leitura das pontuações de vários arquivos
-    char pontuacoes[5][TAMANHO_BUFFER];
-    const char *arquivos[5] = {
+    char pontuacoes[6][TAMANHO_BUFFER];
+    const char *arquivos[6] = {
         "resourses/pontuacao1.txt",
         "resourses/pontuacao2.txt",
         "resourses/pontuacao3.txt",
         "resourses/pontuacao4.txt",
-        "resourses/pontuacao5.txt"
+        "resourses/pontuacao5.txt",
+        "resourses/pontuacaoB.txt"
     };
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         if (!lerArquivo(arquivos[i], pontuacoes[i], TAMANHO_BUFFER)) {
-            snprintf(pontuacoes[i], TAMANHO_BUFFER, "Pontuação %d: 0", i + 1);
+            snprintf(pontuacoes[i], TAMANHO_BUFFER, "Pontuacao %d: 0", i + 1);
         }
     }
 
     // Criação de elementos da interface para exibir cada pontuação
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         CreateWindow("STATIC", pontuacoes[i], WS_VISIBLE | WS_CHILD | SS_CENTER,
                      50, 50 + (i * 50), 400, 40, hwndPontuacao, NULL, wc.hInstance, NULL);
     }
 
     CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW,
-                 200, 300, 100, 40, hwndPontuacao, (HMENU)ID_VOLTAR_PONTUACAO, wc.hInstance, NULL);
+                 200, 430, 100, 40, hwndPontuacao, (HMENU)ID_VOLTAR_PONTUACAO, wc.hInstance, NULL);
 
     ShowWindow(hwndPontuacao, SW_SHOW);
 }

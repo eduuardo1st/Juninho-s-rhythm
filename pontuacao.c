@@ -31,24 +31,25 @@ void abrirPontuacao() {
     );
 
     // Leitura das pontuações de vários arquivos
-    char pontuacoes[6][TAMANHO_BUFFER];
-    const char *arquivos[6] = {
+    char pontuacoes[7][TAMANHO_BUFFER];
+    const char *arquivos[7] = {
         "resourses/pontuacao1.txt",
         "resourses/pontuacao2.txt",
         "resourses/pontuacao3.txt",
         "resourses/pontuacao4.txt",
         "resourses/pontuacao5.txt",
+        "resourses/pontuacao6.txt",
         "resourses/pontuacaoB.txt"
     };
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         if (!lerArquivo(arquivos[i], pontuacoes[i], TAMANHO_BUFFER)) {
             snprintf(pontuacoes[i], TAMANHO_BUFFER, "Pontuacao %d: 0", i + 1);
         }
     }
 
     // Criação de elementos da interface para exibir cada pontuação
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         CreateWindow("STATIC", pontuacoes[i], WS_VISIBLE | WS_CHILD | SS_CENTER,
                      50, 50 + (i * 50), 400, 40, hwndPontuacao, NULL, wc.hInstance, NULL);
     }

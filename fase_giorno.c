@@ -139,7 +139,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 PAINTSTRUCT ps;
                 HDC hdc = BeginPaint(hwnd, &ps);
 
-                FillRect(hdc, &ps.rcPaint, CreateSolidBrush(COR_FUNDO_FASE4)); 
+                FillRect(hdc, &ps.rcPaint, CreateSolidBrush(COR_FUNDO_FASE5)); 
 
                 DesenharBarrasTeclas(hdc);
                 DesenharNotas(hdc);
@@ -312,15 +312,15 @@ void DesenharPontuacao(HDC hdc) {
 COLORREF GerarCorPorColuna(int coluna) {
     switch (coluna) {
         case 0: // Primeira coluna
-            return COR_NOTAS_1_FASE4; // Amarelo
+            return COR_NOTAS_1_FASE5; // Amarelo
         case 1: // Segunda coluna
-            return COR_NOTAS_2_FASE4;
+            return COR_NOTAS_2_FASE5;
         case 2: // Terceira coluna
-            return COR_NOTAS_3_FASE4;
+            return COR_NOTAS_3_FASE5;
         case 3: // Quarta coluna
-            return COR_NOTAS_4_FASE4;
+            return COR_NOTAS_4_FASE5;
         default:
-            return COR_NOTAS_1_FASE4; // Branco (ou outra cor padr�o)
+            return COR_NOTAS_1_FASE5; // Branco (ou outra cor padr�o)
     }
 }
 

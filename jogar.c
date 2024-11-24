@@ -10,8 +10,7 @@ HBRUSH hbrBackgroundJogar;
 LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Função para abrir a janela de seleção de fases
-void abrirJogar()
-{
+void abrirJogar() {
     WNDCLASS wc = {0};
     wc.lpfnWndProc = JogarProc;
     wc.hInstance = GetModuleHandle(NULL);
@@ -21,24 +20,34 @@ void abrirJogar()
 
     RegisterClass(&wc);
 
-    // Criação da janela
+    // Criação da janela principal
     hwndJogar = CreateWindow(
         "JanelaJogar", "Seleção de Fases",
         WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT, 700, 500,
         NULL, NULL, wc.hInstance, NULL);
 
-    // Criação dos botões de fases com BS_OWNERDRAW para estilização
-    CreateWindow("BUTTON", "Fase 1", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 100, 50, 100, 40, hwndJogar, (HMENU)ID_FASE1, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 2", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 400, 50, 100, 40, hwndJogar, (HMENU)ID_FASE2, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 3", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 100, 120, 100, 40, hwndJogar, (HMENU)ID_FASE3, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 4", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 400, 120, 100, 40, hwndJogar, (HMENU)ID_FASE4, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Fase 5", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 100, 190, 100, 40, hwndJogar, (HMENU)ID_FASE5, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "?????", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 400, 190, 100, 40, hwndJogar, (HMENU)ID_BOSS, wc.hInstance, NULL);
-    CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 250, 240, 100, 40, hwndJogar, (HMENU)ID_VOLTAR_FASES, wc.hInstance, NULL);
+    // Criação dos botões centralizados
+    CreateWindow("BUTTON", "Fase 1", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 175, 50, 100, 40, hwndJogar, (HMENU)ID_FASE1, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 2", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 425, 50, 100, 40, hwndJogar, (HMENU)ID_FASE2, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 3", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 175, 120, 100, 40, hwndJogar, (HMENU)ID_FASE3, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 4", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 425, 120, 100, 40, hwndJogar, (HMENU)ID_FASE4, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 5", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 175, 190, 100, 40, hwndJogar, (HMENU)ID_FASE5, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Fase 6", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 425, 190, 100, 40, hwndJogar, (HMENU)ID_FASE6, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "?????", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 300, 260, 100, 40, hwndJogar, (HMENU)ID_BOSS, wc.hInstance, NULL);
+    CreateWindow("BUTTON", "Voltar", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 
+                 300, 360, 100, 40, hwndJogar, (HMENU)ID_VOLTAR_FASES, wc.hInstance, NULL);
 
     ShowWindow(hwndJogar, SW_SHOW);
 }
+
 
 // Função de procedimento de janela para a janela de seleção de fases
 LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -95,7 +104,10 @@ LRESULT CALLBACK JogarProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case ID_FASE4:
             system("fase_giorno.exe");
             break;
-        case ID_FASE5:
+         case ID_FASE5:
+            system("Bloodbath.exe");
+            break;
+        case ID_FASE6:
             system("fase_megalovania.exe");
             break;
         case ID_BOSS:

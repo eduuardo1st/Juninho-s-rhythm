@@ -259,7 +259,7 @@ void MoverNotas(int tempoAtual) {
     }
 
     // Verifica se a soma de erros e pontua��o � 539
-    if (!jogoEncerrado1 && pontuacao + erros == 20000) {
+    if (!jogoEncerrado1 && pontuacao + erros == 740) {
         jogoEncerrado1 = true; // Marca o jogo como encerrado
         finalizarFase1(GetActiveWindow());
     }

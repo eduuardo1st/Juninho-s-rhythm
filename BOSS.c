@@ -388,8 +388,9 @@ void DesenharBarrasTeclas(HDC hdc) {
     int yPosition = WINDOW_HEIGHT - barraHeight - 100;
     int totalBarWidth = 176 * 4;
     int startX = (WINDOW_WIDTH - totalBarWidth) / 2;
+    int i;
 
-    for (int i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         int x = startX + i * 150;
         int raio = 20 * 1.5;
         barrasTeclas[i].x = x;

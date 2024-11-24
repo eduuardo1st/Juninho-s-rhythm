@@ -20,6 +20,7 @@ int erros;
 BarraTecla barrasTeclas[4]; // Declara��o do array de barras
 Nota *listaNotas; // Cabe�a da lista encadeada de notas
 Nota notas[10];
+int i;
 
 void salvarPontuacao(int novaPontuacao) {
     const char *arquivoPontuacao = "resourses/pontuacao3.txt"; // Caminho do arquivo
@@ -65,7 +66,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     WNDCLASS wc = {0};
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = GetModuleHandle(NULL);
-    wc.lpszClassName = "RythmGameWindowClass";
+    wc.lpszClassName = "JunimTiles";
 
     RegisterClass(&wc);
 
@@ -120,7 +121,7 @@ void ReiniciarFase() {
     numNotas = 0; // Reseta o n�mero de notas
 
     // Reinicia os eventos
-    for (int i = 0; i < numeroEventos4; i++) {
+    for (i = 0; i < numeroEventos4; i++) {
  eventos4[i].jaCriada = 0; // Reseta o estado de cria��o dos eventos
     }
 }
@@ -218,7 +219,7 @@ bool jogoEncerrado1 = false; // Vari�vel de controle para o estado do jogo
 
 void MoverNotas(int tempoAtual) {
     // Gerar notas de acordo com o tempo predefinido
-    for (int i = 0; i < numeroEventos4; i++) {
+    for (i = 0; i < numeroEventos4; i++) {
         if (eventos4[i].tempo <= tempoAtual && eventos4[i].jaCriada == 0) {
             AdicionarNota(eventos4[i].tecla);
             eventos4[i].jaCriada = 1;
@@ -280,7 +281,7 @@ void DesenharBarrasTeclas(HDC hdc) {
     int totalBarWidth = 176 * 4;
     int startX = (WINDOW_WIDTH - totalBarWidth) / 2;
 
-    for (int i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         int x = startX + i * 150;
         int raio = 20 * 1.5;
         barrasTeclas[i].x = x;

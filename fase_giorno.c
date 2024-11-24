@@ -65,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     WNDCLASS wc = {0};
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = GetModuleHandle(NULL);
-    wc.lpszClassName = "RythmGameWindowClass";
+    wc.lpszClassName = "JunimTiles";
 
     RegisterClass(&wc);
 
@@ -114,13 +114,14 @@ void finalizarFase1(HWND hwnd) {
 
 }
 void ReiniciarFase() {
+    int i;
     pontuacao = 0; // Reinicia a pontua��o
     erros = 0; // Reinicia os erros
     listaNotas = NULL; // Limpa a lista de notas
     numNotas = 0; // Reseta o n�mero de notas
 
     // Reinicia os eventos
-    for (int i = 0; i < numeroEventos; i++) {
+    for (i = 0; i < numeroEventos; i++) {
  eventos[i].jaCriada = 0; // Reseta o estado de cria��o dos eventos
     }
 }
@@ -217,8 +218,9 @@ int erros = 0; // Adicione uma vari�vel global para erros
 bool jogoEncerrado1 = false; // Vari�vel de controle para o estado do jogo
 
 void MoverNotas(int tempoAtual) {
+    int i;
     // Gerar notas de acordo com o tempo predefinido
-    for (int i = 0; i < numeroEventos; i++) {
+    for (i = 0; i < numeroEventos; i++) {
         if (eventos[i].tempo <= tempoAtual && eventos[i].jaCriada == 0) {
             AdicionarNota(eventos[i].tecla);
             eventos[i].jaCriada = 1;
@@ -279,8 +281,9 @@ void DesenharBarrasTeclas(HDC hdc) {
     int yPosition = WINDOW_HEIGHT - barraHeight - 100;
     int totalBarWidth = 176 * 4;
     int startX = (WINDOW_WIDTH - totalBarWidth) / 2;
+    int i;
 
-    for (int i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         int x = startX + i * 150;
         int raio = 20 * 1.5;
         barrasTeclas[i].x = x;

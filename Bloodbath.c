@@ -124,11 +124,13 @@ void ReiniciarFase() {
     
 }
 
-void GerarNotaAleatoria() {
-    int quantidadeNotas = (rand() % 3) + 1; // Gera de 1 a 3 notas simultaneamente
-    for (int i = 0; i < quantidadeNotas; i++) {
-        int tecla = (rand() % 4) + 1; // Coluna aleatória
+void GerarNotaAleatoria(int tempoAtual) {
+    static int proximoTempoGeracao = 0;
+
+    if (tempoAtual >= proximoTempoGeracao) {
+        int tecla = rand() % 4 + 1;
         AdicionarNota(tecla);
+        proximoTempoGeracao = tempoAtual + (rand() % 150 + 150);
     }
 }
 
@@ -163,8 +165,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             MoverNotas(tempoAtual);
 
             // Gera uma nota aleatória a cada 500ms (ajustável)
-            if (tempoAtual % 170 == 0) {
-                GerarNotaAleatoria();
+            if (tempoAtual % 200 == 0) {
+                GerarNotaAleatoria(tempoAtual);
             }
       
             InvalidateRect(hwnd, NULL, TRUE);
@@ -235,7 +237,7 @@ void MoverNotas(int tempoAtual) {
     Nota *anterior = NULL;
 
     while (atual != NULL) {
-        atual->y += 12; // Move a nota para baixo
+        atual->y += 10; // Move a nota para baixo
 
         if (atual->y > WINDOW_HEIGHT) {
             // Contabiliza um erro se a nota passou da tela

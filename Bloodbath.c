@@ -165,7 +165,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             MoverNotas(tempoAtual);
 
             // Gera uma nota aleatória a cada 500ms (ajustável)
-            if (tempoAtual % 200 == 0) {
+            if (tempoAtual % 160 == 0) {
                 GerarNotaAleatoria(tempoAtual);
             }
       
@@ -237,7 +237,7 @@ void MoverNotas(int tempoAtual) {
     Nota *anterior = NULL;
 
     while (atual != NULL) {
-        atual->y += 10; // Move a nota para baixo
+        atual->y += 11; // Move a nota para baixo
 
         if (atual->y > WINDOW_HEIGHT) {
             // Contabiliza um erro se a nota passou da tela
@@ -261,7 +261,7 @@ void MoverNotas(int tempoAtual) {
     }
 
     // Verifica se a soma de erros e pontua��o � 539
-    if (!jogoEncerrado1 && pontuacao + erros == 740) {
+    if (!jogoEncerrado1 && pontuacao + erros == 430) {
         jogoEncerrado1 = true; // Marca o jogo como encerrado
         finalizarFase1(GetActiveWindow());
     }

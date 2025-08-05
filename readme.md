@@ -1,4 +1,4 @@
-# Juninho's Rhythm: O Jogo de Ritmo em C que Você Esperava!
+# Juninho's Rhythm: Jogo de Ritmo em C!
 
 Juninho Tiles é um jogo de ritmo envolvente e desafiador, desenvolvido em linguagem C e otimizado para Windows. Inspirado em clássicos como Guitar Hero, OSU! e Piano Tiles, este projeto oferece uma experiência única com fases modulares, sistema de menu personalizável, configuração de comandos e um robusto sistema de pontuação. Prepare-se para testar seus reflexos e seu senso de ritmo!
 
